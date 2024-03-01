@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 const registerController = async (req, res) => {
     console.log('Inside registerController');
     try {
-        const { username, email, password, phone, address } = req.body;
-        if (!username || !email || !password || !phone || !address) {
+        const { username, email, password, phone, address, answer } = req.body;
+        if (!username || !email || !password || !phone || !address || !answer) {
             return res.status(500).send({
                 success: false,
                 message: "Please provide all data"
@@ -27,7 +27,8 @@ const registerController = async (req, res) => {
             email,
             password: hashpassword,
             address,
-            phone
+            phone,
+            answer,
         })
         res.status(201).send({
             success: true,
@@ -51,7 +52,6 @@ const loginController = async (req, res) => {
             return res.status(500).send({
                 success: false,
                 message: "fill all the field",
-                error
             })
         }
         const user = await userModel.findOne({ email });
@@ -59,7 +59,6 @@ const loginController = async (req, res) => {
             return res.status(404).send({
                 success: false,
                 message: "No user exits",
-                error
             })
         }
         const isMatch = await bcrypt.compare(password, user.password);

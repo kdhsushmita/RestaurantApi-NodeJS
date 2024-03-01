@@ -32,6 +32,10 @@ const userSchema = new mongoose.Schema(
         profile: {
             type: String,
             default: ""
+        },
+        answer: {
+            type: String,
+            required: [true, "Asnwer is required"],
         }
     },
     {

@@ -2,9 +2,9 @@ const JWT = require("jsonwebtoken");
 
 const authMiddlewareHandler = async (req, res, next) => {
     try {
-        console.log("Req header is ", req.headers)
+        // console.log("Req header is ", req.headers)
         let token;
-        let authHeader = req.headers.Authorization;
+        let authHeader = req.headers["Authorization"] || req.headers["authorization"];
         if (authHeader && authHeader.startsWith("Bearer")) {
             token = authHeader.split(" ")[1];
             JWT.verify(token, process.env.JWT_SECRET, (err, decode) => {
